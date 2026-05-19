@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
+    Lançar movimentação
+</button>
+
+<div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
+    <form id="form-cadastro" action="{{ url_for('get_logistica') }}" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="mostrar1">Lançar movimentação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>
+                        <input id="input-data" placeholder="xx/xx/xxxx" name="form-data"
+                               class="form-modal">
+                    </label>
+                    <label>
+                        <input id="input-localizacao" placeholder="Digite a localização"
+                               name="form-localizacao" class="form-modal">
+                    </label>
+                    <label>
+                        <input id="input-codigo" placeholder="Digite o código de rastreio" name="form-codigo"
+                               class="form-modal">
+                    </label>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button href="{{ url_for('get_logistica') }}" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Fechar
+                    </button>
+                    <button href="{{ url_for('get_logistica') }}" type="submit" class="btn btn-info">Lançar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+    <!--Lista-->
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Data</th>
+            <th scope="col">Localização</th>
+            <th scope="col">Código de Rastreio</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% endblock conteudo %}

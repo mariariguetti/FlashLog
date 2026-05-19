@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlashLog</title>
+
+    <!--    Link do Boostrap - Antes do CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!--    Link do Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!--Link das Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap"
+          rel="stylesheet">
+
+
+</head>
+<body>
+
+
+<div class="header">
+    <div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <!-- Barra lateral -->
+        <div class="sidebar">
+            <label for="menu-toggle" class="close-btn"><i class="bi bi-x-lg"></i></label>
+
+            <ul class="log_bar">
+                <li>
+                    <a href="/logistica">Logística</a>
+                    <a href="/encomendas">Encomendas</a>
+                    <a href="/clientes">Clientes</a>
+                </li>
+                <li>
+                    <img class="sidebar-img" src="../static/img/flash.png" height="150" width="255"/>
+                </li>
+            </ul>
+        </div>
+        <label for="menu-toggle" class="menu-icon"><i class="icon_menu bi bi-filter-left fs-4">Menu</i></label>
+    </div>
+
+    <div class="img-flash"><img src="../static/img/flash.png" height="85px" width="240px"/></div>
+    <div>
+        <a href="{{ url_for('home') }}">Início</a>
+        <a href="{{ url_for('get_funcionario') }}">Entrar</a>
+    </div>
+
+</div>
+{% block conteudo %}
+
+{% endblock conteudo %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

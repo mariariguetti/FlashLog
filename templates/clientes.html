@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
+    Cadastrar cliente
+</button>
+
+<div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
+    <form id="form-cadastro" action="{{ url_for('get_clientes') }}" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="mostrar1">Cadastrar cliente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>
+                        <input id="input-nome" placeholder="Digite seu nome" name="form-nome"
+                               class="form-modal">
+                    </label>
+                    <label>
+                        <input id="input-cpf" placeholder="xxxxxxxxxxx"
+                               name="form-cpf" class="form-modal">
+                    </label>
+                    <label>
+                        <input id="input-telefone" placeholder="(xx)xxxxx-xxxx" name="form-telefone"
+                               class="form-modal">
+                    </label>
+                    <label>
+                        <input id="input-cep" placeholder="xxxx-xxx" name="form-cep"
+                               class="form-modal">
+                    </label>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button href="{{ url_for('get_clientes') }}" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Fechar
+                    </button>
+                    <button href="{{ url_for('get_clientes') }}" type="submit" class="btn btn-info">Lançar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock conteudo %}

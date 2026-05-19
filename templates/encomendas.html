@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
+    Lançar encomenda
+</button>
+
+<div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
+    <form id="form-cadastro" action="{{ url_for('get_encomendas') }}" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="mostrar1">Lançar encomenda</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Selecione seu cargo</option>
+                        <option value="PROCESSANDO">Processando</option>
+                        <option value="POSTADO">Postado</option>
+                        <option value="TRANSITO">Trânsito</option>
+                        <option value="ENTREGUE">Entregue</option>
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button href="{{ url_for('get_encomendas') }}" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Fechar
+                    </button>
+                    <button href="{{ url_for('get_encomendas') }}" type="submit" class="btn btn-info">Lançar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock conteudo %}
