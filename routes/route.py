@@ -90,7 +90,7 @@ def get_movimentacao(id_cliente, id_encomenda):
     return dados.json()
 
 
-def post_movimentacao(cep, encomenda_id, cliente_id):
+def cadastrar_movimentacao(cep, encomenda_id, cliente_id):
     endereco = f"{url}/post_movimentacao"
 
     dados_movimentacao = {

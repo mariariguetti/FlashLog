@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>FlashLog</title>
@@ -9,7 +9,7 @@
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <!--    Link do Bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <!--Link das Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,19 +30,19 @@
 
             <ul class="log_bar">
                 <li>
-                    <a href="{{url_for('logistica', var_clie = var_clientes[0], var_enco = var_encomendas[0])}}">Logística</a>
+                    <a href="{{url_for('logistica', var_clie = var_c, var_enco = var_e)}}">Logística</a>
                     <a href="{{url_for('get_encomendas')}}">Encomendas</a>
                     <a href="{{url_for('get_clientes')}}">Clientes</a>
                 </li>
                 <li>
-                    <img class="sidebar-img" src="../static/img/flash.png" height="150" width="255"/>
+                    <img class="sidebar-img" src="/static/img/flash.png" height="150" width="255"/>
                 </li>
             </ul>
         </div>
         <label for="menu-toggle" class="menu-icon"><i class="icon_menu bi bi-filter-left fs-4">Menu</i></label>
     </div>
 
-    <div class="img-flash"><img src="../static/img/flash.png" height="85px" width="240px"/></div>
+    <div class="img-flash"><img src="/static/img/flash.png" height="85px" width="240px"/></div>
     <div>
         <a href="{{ url_for('home') }}">Início</a>
         <a href="{{ url_for('login') }}">Login</a>

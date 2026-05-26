@@ -7,7 +7,7 @@
 </button>
 
 <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
-    <form id="form-cadastro" action="{{ url_for('post_logistica') }}" method="post">
+    <form id="form-cadastro" action="{{ url_for('post_movimentacao') }}" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -23,8 +23,8 @@
                     <label>
                         <select class="form-select" aria-label="Default select example" name="form-encomenda">
                             <option selected>Selecione a encomenda da movimentação</option>
-                            {% for i in var_enco %}
-                            <option value="{{i['id_encomenda']}}">{{i["remetente"]}} - {{i["destinatario"]}}</option>
+                            {% for i in var_encom %}
+                            <option value="{{i['id_encomenda']}}">{{i["remetente"]}}</option>
                             {% endfor %}
 
                         </select>
@@ -32,7 +32,7 @@
                     <label>
                         <select class="form-select" aria-label="Default select example" name="form-cliente">
                             <option selected>Selecione o cliente da movimentação</option>
-                            {% for i in var_clie %}
+                            {% for i in var_clien %}
                             <option value="{{i['id_cliente']}}">{{i["nome"]}}</option>
                             {% endfor %}
                         </select>
@@ -60,6 +60,8 @@
         <th scope="col">ID</th>
         <th scope="col">Data</th>
         <th scope="col">Localização</th>
+        <th scope="col">Remetente</th>
+        <th scope="col">Destinatário</th>
         <th scope="col">Código de Rastreio</th>
         <th scope="col">Ações</th>
     </tr>

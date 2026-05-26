@@ -25,11 +25,12 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    encomendas = get_encomenda()['encomendas']
-    clientes = get_cliente()['clientes']
-    print('enco',encomendas)
-    print('clie',clientes)
-    return render_template("base.html",var_encomendas=encomendas,var_clientes=clientes)
+    encomendas = get_encomenda()
+    clientes = get_cliente()
+    print('enco',encomendas["encomendas"])
+    print('clie',clientes["clientes"])
+    return render_template("base.html",var_e=encomendas["encomendas"],var_c=clientes["clientes"])
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -82,14 +83,12 @@ def post_funcionario():
     return render_template("cadastrar.html")
 
 @app.route('/logistica/{var_clie}/{var_enco}',methods=['GET','POST'])
-def logistica(var_clie,var_enco):
-    for i in var_clie:
-        print(i)
+def logistica(var_clie=1,var_enco=1):
     movimen = get_movimentacao(id_cliente=var_clie,id_encomenda=var_enco)
     var_movi = movimen["movimentacao"]
-    var_clien = movimen["cliente"]
-    var_encom = movimen["encomenda"]
-    return render_template("logistica.html",var_movi=var_movi,var_clien=var_clien,var_encom=var_encom)
+    var_clien = get_cliente()
+    var_encom = get_encomenda()
+    return render_template("logistica.html",var_movi=var_movi,var_clien=var_clien["clientes"],var_encom=var_encom["encomendas"])
 
 
 @app.route('/post_movimentacao',methods=['GET','POST'])
@@ -102,7 +101,7 @@ def post_movimentacao():
         print(f'error: valores invalidos')
         return redirect(url_for("get_logistica"))
     try:
-        new_logistica = post_movimentacao(cep, encomenda, cliente)
+        new_logistica = cadastrar_movimentacao(cep, encomenda, cliente)
         if new_logistica:
             print('logistica cadastrada com sucesso!')
             return redirect(url_for("get_logistica"))
