@@ -5,19 +5,19 @@
 <div class="login d-flex justify-content-center align-items-center">
     <div class="card_login card">
         <img src="../static/img/login.png" height="125" width="150"/>
-        <form id="form-login" action="{{ url_for('get_funcionario') }}" method="post"
+        <form id="form-login" action="{{ url_for('login') }}" method="post"
               class="card_login d-flex flex-column justify-content-center align-items-center">
             <label class="my-2">
                 <div class="d-flex">
                     <i class="icone_input bi bi-person-vcard"></i>
-                    <input id="input-cpf" placeholder="Digite o CPF" name="form-cpf" class="form-control">
+                    <input placeholder="Digite o Email" name="form-email" class="form-control">
                 </div>
             </label>
 
             <label class="my-2">
                 <div class="d-flex">
                     <i class="icone_input bi bi-clipboard2"></i>
-                    <input id="input-senha" placeholder="Digite a senha" type="password" name="form-senha"
+                    <input placeholder="Digite a senha" type="password" name="form-senha"
                            class="form-control">
                 </div>
             </label>
@@ -33,7 +33,7 @@
 
         <!-- Modal -->
         <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
-            <form id="form-cadastro" action="{{ url_for('get_funcionario') }}" method="post">
+            <form id="form-cadastro" action="{{ url_for('post_funcionario') }}" method="post">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -43,34 +43,36 @@
                         </div>
                         <div class="modal-body">
                             <label>
-                                <input id="input-nome" placeholder=" Nome" name="form-nome"
+                                <input id="input-nome" placeholder="Nome" name="form-nome"
                                        class="form-modal">
                             </label>
                             <label>
-                                <input id="input-nascimento" placeholder=" xx/xx/xxxx"
-                                       name="form-nascimento" class="form-modal">
+                                <input id="input-nascimento"
+                                       name="form-nascimento" class="form-modal" type="date">
                             </label>
                             <label>
-                                <input id="input-email" placeholder=" username@email.com" name="form-email"
-                                       class="form-modal">
+                                <input id="input-email" placeholder="username@email.com" name="form-email"
+                                       class="form-modal" type="email">
                             </label>
                             <label>
-                                <input id="input-senha2" placeholder=" Password" name="form-senha"
-                                       class="form-modal">
+                                <input id="input-senha2" placeholder="Password" name="form-senha"
+                                       class="form-modal" type="tel">
                             </label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Selecione seu cargo</option>
-                                <option value="ADMIN">Administrador</option>
-                                <option value="FUNCIONARIO">Funcionário</option>
-                            </select>
+                            <label>
+                                <select class="form-select" aria-label="Default select example" name="form-perfil">
+                                    <option selected>Selecione seu cargo</option>
+                                    <option value="ADMIN">Administrador</option>
+                                    <option value="FUNCIONARIO">Funcionário</option>
+                                </select>
+                            </label>
                         </div>
 
 
                         <div class="modal-footer">
-                            <button href="{{ url_for('get_funcionario') }}" type="button" class="btn btn-secondary"
+                            <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Fechar
                             </button>
-                            <button href="{{ url_for('get_funcionario') }}" type="submit" class="btn btn-info">Cadastrar
+                            <button type="submit" class="btn btn-info">Cadastrar
                             </button>
                         </div>
                     </div>

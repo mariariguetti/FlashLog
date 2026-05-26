@@ -2,12 +2,18 @@
 
 {% block conteudo %}
 
-<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
-    Lançar encomenda
-</button>
+<!--Pesquisa-->
+<div class="pesquisa-encomendas">
+    <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
+        Lançar encomenda
+    </button>
+
+</div>
+
+<!--Modal-->
 
 <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
-    <form id="form-cadastro" action="{{ url_for('get_encomendas') }}" method="post">
+    <form id="form-cadastro" action="{{ url_for('cadastrar_encomenda') }}" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -16,8 +22,24 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Selecione seu cargo</option>
+                    <select class="form-select" aria-label="Default select example" name="form-remetente">
+                        <option selected>Selecione o Remetente</option>
+                        {% for i in var_empre %}
+                        <option value="{{i['nome']}}">{{i["id_empresa"]}} - {{i["nome"]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-body">
+                    <select class="form-select" aria-label="Default select example" name="form-destinatario">
+                        <option selected>Selecione seu Destinatário</option>
+                        {% for i in var_cliente %}
+                        <option value="{{i['nome']}}">{{i["nome"]}} - {{i["cep"]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-body">
+                    <select class="form-select" aria-label="Default select example" name="form-status">
+                        <option selected>Selecione o status da Entrega</option>
                         <option value="PROCESSANDO">Processando</option>
                         <option value="POSTADO">Postado</option>
                         <option value="TRANSITO">Trânsito</option>
@@ -27,15 +49,56 @@
 
 
                 <div class="modal-footer">
-                    <button href="{{ url_for('get_encomendas') }}" type="button" class="btn btn-secondary"
+                    <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Fechar
                     </button>
-                    <button href="{{ url_for('get_encomendas') }}" type="submit" class="btn btn-info">Lançar
+                    <button type="submit" class="btn btn-info">Lançar
                     </button>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Código de Rastreio</th>
+        <th scope="col">Remetente</th>
+        <th scope="col">Destinatário</th>
+        <th scope="col">Status</th>
+        <th scope="col">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in var_enco %}
+    <tr>
+        <td>{{i["id_encomenda"]}}</td>
+        <td>{{i["codigo_r"]}}</td>
+        <td>{{i["remetente"]}}</td>
+        <td>{{i["destinatario"]}}</td>
+        {% if i["status_encomenda"] == "PROCESSANDO" %}
+        <td>
+            <div class="status_encomenda bg-warning"> Em Processamento</div>
+        </td>
+        {% elif i["status_encomenda"] == "POSTADO" %}
+        <td>
+            <div class="status_encomenda bg-secondary">Postado</div>
+        </td>
+        {% elif i["status_encomenda"] == "TRANSITO" %}
+        <td>
+            <div class="status_encomenda bg-info">Em Transito</div>
+        </td>
+        {% elif i["status_encomenda"] == "ENTREGUE" %}
+        <td>
+            <div class="status_encomenda bg-success">Entregue</div>
+        </td>
+
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 {% endblock conteudo %}
