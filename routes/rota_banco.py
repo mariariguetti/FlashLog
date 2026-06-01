@@ -1,7 +1,6 @@
 import requests
 
-url = "http://10.135.232.18:5006"
-
+url = "http://10.135.232.16:5006"
 
 def logar_user(id):
     endereco = f"{url}/load_user"
@@ -75,28 +74,21 @@ def post_encomenda(remetente,destinatario,status_encomenda):
     return dados.json()
 
 
-def get_movimentacao(id_cliente, id_encomenda):
+def get_movimentacao():
     endereco = f"{url}/get_movimentacao"
 
-    dados_movimentacao = {
-        "var_cliente": id_cliente,
-        "var_encomenda": id_encomenda
-    }
-
-    print('flamingo',dados_movimentacao)
-    dados = requests.post(endereco, json=dados_movimentacao)
+    dados = requests.get(endereco)
     print('movi',dados)
 
     return dados.json()
 
 
-def cadastrar_movimentacao(cep, encomenda_id, cliente_id):
+def cadastrar_movimentacao(cep, encomenda_id):
     endereco = f"{url}/post_movimentacao"
 
     dados_movimentacao = {
         "cep": cep,
         "encomenda_id": encomenda_id,
-        "cliente_id": cliente_id
     }
 
     dados = requests.post(endereco, json=dados_movimentacao)
@@ -137,3 +129,23 @@ def pesquisar_encomenda(termo):
     dados = requests.post(endereco, json=dados_pesquisa)
 
     return dados.json()
+
+def get_galpoes():
+    endereco = f"{url}/get_galpoes"
+
+    dados = requests.get(endereco)
+
+    return dados.json()
+
+def post_galpao(cidade, estado):
+    endereco = f"{url}/post_galpao"
+
+    dados = {
+        "cidade": cidade,
+        "estado": estado
+    }
+
+    dados = requests.post(endereco, json=dados)
+
+    return dados.json()
+

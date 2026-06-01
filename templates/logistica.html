@@ -2,10 +2,11 @@
 
 {% block conteudo %}
 
-<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
-    Lançar movimentação
-</button>
-
+<div class="pesquisa-encomendas">
+    <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
+        Lançar movimentação
+    </button>
+</div>
 <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
     <form id="form-cadastro" action="{{ url_for('post_movimentacao') }}" method="post">
         <div class="modal-dialog">
@@ -24,16 +25,7 @@
                         <select class="form-select" aria-label="Default select example" name="form-encomenda">
                             <option selected>Selecione a encomenda da movimentação</option>
                             {% for i in var_encom %}
-                            <option value="{{i['id_encomenda']}}">{{i["remetente"]}}</option>
-                            {% endfor %}
-
-                        </select>
-                    </label>
-                    <label>
-                        <select class="form-select" aria-label="Default select example" name="form-cliente">
-                            <option selected>Selecione o cliente da movimentação</option>
-                            {% for i in var_clien %}
-                            <option value="{{i['id_cliente']}}">{{i["nome"]}}</option>
+                            <option value="{{i['id_encomenda']}}">{{i['remetente']}} - {{i["destinatario"]}}</option>
                             {% endfor %}
                         </select>
                     </label>
@@ -63,10 +55,71 @@
         <th scope="col">Remetente</th>
         <th scope="col">Destinatário</th>
         <th scope="col">Código de Rastreio</th>
+        <th scope="col">Status</th>
         <th scope="col">Ações</th>
     </tr>
     </thead>
     <tbody>
+    {% for i in var_movi %}
+    <tr>
+        <td>{{i["movimentacao"]["id_movimentacao"]}}</td>
+        <td>{{i["movimentacao"]["data_atual"]}}</td>
+        <td>{{i["movimentacao"]["cep"]}}</td>
+        <td>{{i["encomendas"]["remetente"]}}</td>
+        <td>{{i["encomendas"]["destinatario"]}}</td>
+        <td>{{i["encomendas"]["codigo_r"]}}</td>
+        {% if i["encomendas"]["status_encomenda"] == "POSTADO" %}
+        <td>
+            <div class="status_encomenda bg-warning">Postado</div>
+        </td>
+        {% elif i["encomendas"]["status_encomenda"] == "TRANSITO" %}
+        <td>
+            <div class="status_encomenda bg-info">Em Transito</div>
+        </td>
+        {% elif i["encomendas"]["status_encomenda"] == "ENTREGUE" %}
+        <td>
+            <div class="status_encomenda bg-success">Entregue</div>
+        </td>
+        {% endif %}
+        <td><a data-bs-toggle="modal" data-bs-target="#StaticEdit{{i['movimentacao']['id_movimentacao']}}"><i class="bi bi-shuffle btn btn-primary"></i></a></td>
+    </tr>
+    <div class="modal fade" id="StaticEdit{{i['movimentacao']['id_movimentacao']}}" tabindex="-1" aria-labelledby="Edit_{{i['movimentacao']['id_movimentacao']}}" aria-hidden="true">
+    <form id="form-edit" action="{{ url_for('edit_movimentacao') }}" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="Edit_{{i['movimentacao']['id_movimentacao']}}">Lançar movimentação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>
+                        <input placeholder="Digite o CEP" name="form-cep"
+                               class="form-modal">
+                    </label>
+                    <label>
+                        <select class="form-select" aria-label="Default select example" name="form-encomenda">
+                            <option selected>Selecione a encomenda da movimentação</option>
+                            {% for i in var_encom %}
+                            <option value="{{i['id_encomenda']}}">{{i['remetente']}} - {{i["destinatario"]}}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Fechar
+                    </button>
+                    <button type="submit" class="btn btn-info">Lançar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    {% endfor %}
     </tbody>
 </table>
 {% endblock conteudo %}

@@ -2,10 +2,11 @@
 
 {% block conteudo %}
 
+<div class="pesquisa-encomendas">
 <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
     Cadastrar cliente
 </button>
-
+</div>
 <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
     <form id="form-cadastro" action="{{ url_for('post_cliente') }}" method="post">
         <div class="modal-dialog">
@@ -55,7 +56,6 @@
         <th scope="col">CPF</th>
         <th scope="col">Telefone</th>
         <th scope="col">CEP</th>
-        <th scope="col">Ações</th>
     </tr>
     </thead>
     <tbody>
@@ -70,5 +70,7 @@
     {% endfor %}
     </tbody>
 </table>
+
+
 
 {% endblock conteudo %}

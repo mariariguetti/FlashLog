@@ -7,7 +7,6 @@
     <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
         Lançar encomenda
     </button>
-
 </div>
 
 <!--Modal-->
@@ -37,17 +36,6 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="modal-body">
-                    <select class="form-select" aria-label="Default select example" name="form-status">
-                        <option selected>Selecione o status da Entrega</option>
-                        <option value="PROCESSANDO">Processando</option>
-                        <option value="POSTADO">Postado</option>
-                        <option value="TRANSITO">Trânsito</option>
-                        <option value="ENTREGUE">Entregue</option>
-                    </select>
-                </div>
-
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Fechar
@@ -78,13 +66,9 @@
         <td>{{i["codigo_r"]}}</td>
         <td>{{i["remetente"]}}</td>
         <td>{{i["destinatario"]}}</td>
-        {% if i["status_encomenda"] == "PROCESSANDO" %}
+        {% if i["status_encomenda"] == "POSTADO" %}
         <td>
-            <div class="status_encomenda bg-warning"> Em Processamento</div>
-        </td>
-        {% elif i["status_encomenda"] == "POSTADO" %}
-        <td>
-            <div class="status_encomenda bg-secondary">Postado</div>
+            <div class="status_encomenda bg-warning">Postado</div>
         </td>
         {% elif i["status_encomenda"] == "TRANSITO" %}
         <td>
@@ -94,8 +78,8 @@
         <td>
             <div class="status_encomenda bg-success">Entregue</div>
         </td>
-
         {% endif %}
+        <td><a><i class="bi bi-shuffle btn btn-primary"></i></a></td>
     </tr>
     {% endfor %}
     </tbody>

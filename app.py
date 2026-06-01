@@ -1,7 +1,10 @@
+from xml.dom.pulldom import END_ELEMENT
+
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user, UserMixin
 
-from routes.route import *
+from routes.rota_banco import *
+from routes.rota_endereco import get_endereco
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
@@ -82,33 +85,40 @@ def post_funcionario():
             return redirect(url_for("login"))
     return render_template("cadastrar.html")
 
-@app.route('/logistica/{var_clie}/{var_enco}',methods=['GET','POST'])
-def logistica(var_clie=1,var_enco=1):
-    movimen = get_movimentacao(id_cliente=var_clie,id_encomenda=var_enco)
-    var_movi = movimen["movimentacao"]
+@app.route('/logistica',methods=['GET','POST'])
+def logistica():
     var_clien = get_cliente()
     var_encom = get_encomenda()
-    return render_template("logistica.html",var_movi=var_movi,var_clien=var_clien["clientes"],var_encom=var_encom["encomendas"])
+    movimen = get_movimentacao()
+    movi_1 = movimen["movimentacao"]
+    for i in movi_1:
+        endereco = i["movimentacao"]["cep"]
+        ende_ = get_endereco(endereco)
+        endereco_ = f"{ende_['localidade']}/{ende_['uf']}"
+        i["movimentacao"]["cep"] = endereco_
+    return render_template("logistica.html",var_movi=movimen["movimentacao"], var_clien=var_clien["clientes"],var_encom=var_encom["encomendas"],var_ender=movimen)
 
 
 @app.route('/post_movimentacao',methods=['GET','POST'])
 def post_movimentacao():
     cep = request.form.get("form-cep")
     encomenda = request.form.get("form-encomenda")
-    cliente = request.form.get("form-cliente")
 
-    if not (cep and encomenda and cliente):
+    if not (cep and encomenda):
         print(f'error: valores invalidos')
-        return redirect(url_for("get_logistica"))
+        return redirect(url_for("logistica"))
     try:
-        new_logistica = cadastrar_movimentacao(cep, encomenda, cliente)
+        new_logistica = cadastrar_movimentacao(cep, encomenda)
         if new_logistica:
             print('logistica cadastrada com sucesso!')
-            return redirect(url_for("get_logistica"))
+            return redirect(url_for("logistica"))
 
     except Exception as e:
         print(e)
-        return redirect(url_for("get_logistica"))
+        return redirect(url_for("logistica"))
+
+@app.route('/edit_movimentacao',methods=['GET','POST'])
+def edit_movimentacao():
 
 @app.route('/encomendas')
 def get_encomendas():
@@ -124,10 +134,11 @@ def cadastrar_encomenda():
         destinatario = request.form.get("form-destinatario")
         status = request.form.get("form-status")
 
-        if not(remetente and destinatario and status):
+        if not(remetente and destinatario):
             print(f'error: valores invalidos')
             return redirect(url_for("get_encomendas"))
-
+        elif not status:
+            status = "POSTADO"
         try:
             new_encom = post_encomenda(remetente, destinatario, status)
 
@@ -139,6 +150,8 @@ def cadastrar_encomenda():
             return redirect(url_for("get_encomendas"))
 
     return render_template("encomendas.html")
+
+
 
 @app.route('/pesquisar_encomenda', methods=['POST'])
 def pesquisar_encomenda():
@@ -162,6 +175,12 @@ def pesquisar_encomenda():
 @app.route('/clientes')
 def get_clientes():
     var_clientes = get_cliente()
+    clien_ = var_clientes["clientes"]
+    for i in clien_:
+        endereco = i["cep"]
+        ende_ = get_endereco(endereco)
+        endereco_ = f"{ende_['localidade']}/{ende_['uf']}"
+        i["cep"] = endereco_
     return render_template("clientes.html",var_clientes=var_clientes["clientes"])
 
 @app.route('/cadastrar_cliente', methods=['POST'])
@@ -187,6 +206,36 @@ def post_cliente():
             return redirect(url_for("get_clientes"))
 
     return render_template("clientes.html")
+
+@app.route('/galpoes')
+def ver_galpoes():
+    var_galpoes = get_galpoes()
+    return render_template("galpoes.html",var_galpoes=var_galpoes["galpoes"])
+
+@app.route('/postar_galpao', methods=['POST'])
+def postar_galpao():
+    if request.method == 'POST':
+        cep = request.form.get("form-cep")
+
+        if not(cep):
+            print(f'error: valores invalidos')
+            return redirect(url_for("ver_galpoes"))
+        try:
+            endereco_galpao = get_endereco(cep=cep)
+            print(endereco_galpao)
+            new_ende = post_galpao(cidade=endereco_galpao["logradouro"],estado=endereco_galpao["estado"])
+            if new_ende:
+                print('galpão cadastrado com sucesso!')
+                return redirect(url_for("ver_galpoes"))
+
+        except Exception as e:
+            print(e)
+            return redirect(url_for("ver_galpoes"))
+
+    return redirect(url_for("ver_galpoes"))
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5004, host='0.0.0.0')

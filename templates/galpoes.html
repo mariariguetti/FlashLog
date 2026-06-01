@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="pesquisa-encomendas">
+<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro_galpao">
+    Cadastrar galpão
+</button>
+</div>
+<div class="modal fade" id="cadastro_galpao" tabindex="-1" aria-labelledby="mostrar2" aria-hidden="true">
+    <form id="form-cadastro_galpao" action="{{ url_for('postar_galpao') }}" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="mostrar2">Cadastrar cliente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>
+                        <input id="input-nome" placeholder="Digite seu CEP" name="form-cep"
+                               class="form-modal">
+                    </label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Fechar
+                    </button>
+                    <button  type="submit" class="btn btn-info">Lançar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in var_galpoes %}
+    <tr>
+        <td>{{i["id_galpao"]}}</td>
+        <td>{{i["cidade"]}}</td>
+        <td>{{i["estado"]}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock conteudo %}
