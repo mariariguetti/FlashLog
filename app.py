@@ -119,6 +119,7 @@ def post_movimentacao():
 
 @app.route('/edit_movimentacao',methods=['GET','POST'])
 def edit_movimentacao():
+    pass
 
 @app.route('/encomendas')
 def get_encomendas():
