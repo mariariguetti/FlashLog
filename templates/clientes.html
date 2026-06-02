@@ -3,9 +3,9 @@
 {% block conteudo %}
 
 <div class="pesquisa-encomendas">
-<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
-    Cadastrar cliente
-</button>
+    <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
+        Cadastrar cliente
+    </button>
 </div>
 <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
     <form id="form-cadastro" action="{{ url_for('post_cliente') }}" method="post">
@@ -40,7 +40,7 @@
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Fechar
                     </button>
-                    <button  type="submit" class="btn btn-info">Lançar
+                    <button type="submit" class="btn btn-info">Cadastrar
                     </button>
                 </div>
             </div>
@@ -56,6 +56,7 @@
         <th scope="col">CPF</th>
         <th scope="col">Telefone</th>
         <th scope="col">CEP</th>
+        <th scope="col">Ações</th>
     </tr>
     </thead>
     <tbody>
@@ -66,11 +67,86 @@
         <td>{{i["cpf"]}}</td>
         <td>{{i["telefone"]}}</td>
         <td>{{i["cep"]}}</td>
+        <td>
+            <a data-bs-toggle="modal" data-bs-target="#editar{{i['id_cliente']}}"><i
+                    class="bi bi-pencil-square text-primary fs-6"></i></a>
+            <a data-bs-toggle="modal" data-bs-target="#excluir{{i['id_cliente']}}"><i class="bi bi-trash3 text-danger fs-6"></i></a>
+        </td>
     </tr>
+    <div class="modal fade" id="editar{{i['id_cliente']}}" tabindex="-1" aria-labelledby="mostrar{{i['id_cliente']}}"
+         aria-hidden="true">
+        <form id="form-editar" action="{{ url_for('editar_cliente', var_id = i['id_cliente']) }}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="mostrar{{i['id_cliente']}}"><i
+                                class="bi bi-pencil-square text-primary fs-6"></i> Editar {{i["nome"]}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>
+                            <input id="input-nome1" placeholder="Digite seu nome" name="form-nome"
+                                   class="form-modal" value="{{i.nome}}">
+                        </label>
+                        <label>
+                            <input id="input-cpf1" placeholder="Digite seu CPF"
+                                   name="form-cpf" class="form-modal" value="{{i.cpf}}">
+                        </label>
+                        <label>
+                            <input id="input-telefone1" placeholder="Digite seu telefone" name="form-telefone"
+                                   class="form-modal" value="{{i.telefone}}">
+                        </label>
+                        <label>
+                            <input id="input-cep1" placeholder="Digite seu CEP" name="form-cep"
+                                   class="form-modal" value="{{i.cep}}">
+                        </label>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Fechar
+                        </button>
+                        <button type="submit" class="btn btn-info">Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="excluir{{i['id_cliente']}}" tabindex="-1" aria-labelledby="mostrar1{{i['id_cliente']}}"
+         aria-hidden="true">
+        <form id="form-excluir" action="{{ url_for('deletar_cliente', var_id = i['id_cliente']) }}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="mostrar1{{i['id_cliente']}}"><i class="bi bi-trash3 text-danger fs-6"></i> Excluir {{i["nome"]}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                       <label>
+                           <h3>Deseja excluir {{i["nome"]}}?</h3>
+                       </label>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Fechar
+                        </button>
+                        <button type="submit" class="btn btn-info">Excluir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     {% endfor %}
     </tbody>
 </table>
-
 
 
 {% endblock conteudo %}

@@ -29,10 +29,10 @@
                     </select>
                 </div>
                 <div class="modal-body">
-                    <select class="form-select" aria-label="Default select example" name="form-destinatario">
+                    <select class="form-select" aria-label="Default select example" name="form-cliente_id">
                         <option selected>Selecione seu Destinatário</option>
                         {% for i in var_cliente %}
-                        <option value="{{i['nome']}}">{{i["nome"]}} - {{i["cep"]}}</option>
+                        <option value="{{i['id_cliente']}}">{{i["nome"]}} - {{i["cep"]}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -62,19 +62,19 @@
     <tbody>
     {% for i in var_enco %}
     <tr>
-        <td>{{i["id_encomenda"]}}</td>
-        <td>{{i["codigo_r"]}}</td>
-        <td>{{i["remetente"]}}</td>
-        <td>{{i["destinatario"]}}</td>
-        {% if i["status_encomenda"] == "POSTADO" %}
+        <td>{{i["encomenda"]["id_encomenda"]}}</td>
+        <td>{{i["encomenda"]["codigo_r"]}}</td>
+        <td>{{i["encomenda"]["remetente"]}}</td>
+        <td>{{i["cliente"]["id_cliente"]}} - {{i["cliente"]["nome"]}}</td>
+        {% if i["encomenda"]["status_encomenda"] == "POSTADO" %}
         <td>
             <div class="status_encomenda bg-warning">Postado</div>
         </td>
-        {% elif i["status_encomenda"] == "TRANSITO" %}
+        {% elif i["encomenda"]["status_encomenda"] == "TRANSITO" %}
         <td>
             <div class="status_encomenda bg-info">Em Transito</div>
         </td>
-        {% elif i["status_encomenda"] == "ENTREGUE" %}
+        {% elif i["encomenda"]["status_encomenda"] == "ENTREGUE" %}
         <td>
             <div class="status_encomenda bg-success">Entregue</div>
         </td>

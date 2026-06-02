@@ -1,6 +1,6 @@
 import requests
 
-url = "http://10.135.232.16:5006"
+url = "http://10.135.232.34:5006"
 
 def logar_user(id):
     endereco = f"{url}/load_user"
@@ -60,17 +60,17 @@ def get_encomenda():
     return dados.json()
 
 
-def post_encomenda(remetente,destinatario,status_encomenda):
+def post_encomenda(remetente,cliente_id):
     endereco = f"{url}/post_encomenda"
 
     dados_encomenda = {
         "remetente": remetente,
-        "destinatario": destinatario,
-        "status_encomenda": status_encomenda
+        "cliente_id": cliente_id,
     }
-    print('fla',dados_encomenda)
+
     dados = requests.post(endereco, json=dados_encomenda)
-    print("mingo",dados)
+    print(dados)
+
     return dados.json()
 
 
@@ -83,11 +83,11 @@ def get_movimentacao():
     return dados.json()
 
 
-def cadastrar_movimentacao(cep, encomenda_id):
+def cadastrar_movimentacao(galpao_id, encomenda_id):
     endereco = f"{url}/post_movimentacao"
 
     dados_movimentacao = {
-        "cep": cep,
+        "galpao_id": galpao_id,
         "encomenda_id": encomenda_id,
     }
 
@@ -100,7 +100,7 @@ def get_cliente():
     endereco = f"{url}/get_clientes"
 
     dados = requests.get(endereco)
-
+    print(dados)
     return dados.json()
 
 
@@ -118,6 +118,25 @@ def post_clientes(nome, cpf, telefone, cep):
 
     return dados.json()
 
+def edit_cliente(nome,cpf,telefone,cep,var_id):
+    endereco = f"{url}/edit_cliente/{var_id}"
+
+    dados_clientes = {
+        "nome": nome,
+        "cpf": cpf,
+        "telefone": telefone,
+        "cep": cep
+    }
+
+    dados = requests.put(endereco, json=dados_clientes)
+    return dados.json()
+
+def delete_cliente(var_id):
+    endereco = f"{url}/delete_cliente/{var_id}"
+
+    dados = requests.delete(endereco)
+
+    return dados.json()
 
 def pesquisar_encomenda(termo):
     endereco = f"{url}/pesquisar_encomenda"
@@ -142,7 +161,7 @@ def post_galpao(cidade, estado):
 
     dados = {
         "cidade": cidade,
-        "estado": estado
+        "estado": estado,
     }
 
     dados = requests.post(endereco, json=dados)
