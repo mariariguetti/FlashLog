@@ -131,13 +131,6 @@ def edit_cliente(nome,cpf,telefone,cep,var_id):
     dados = requests.put(endereco, json=dados_clientes)
     return dados.json()
 
-def delete_cliente(var_id):
-    endereco = f"{url}/delete_cliente/{var_id}"
-
-    dados = requests.delete(endereco)
-
-    return dados.json()
-
 def pesquisar_encomenda(termo):
     endereco = f"{url}/pesquisar_encomenda"
 

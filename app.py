@@ -169,6 +169,28 @@ def pesquisar_encomenda():
             return redirect(url_for("get_encomendas"))
     return render_template("encomendas.html")
 
+@app.route('/edit_encomenda/<var_id>', methods=['GET', 'POST'])
+def edit_encomenda(var_id):
+    if request.method == 'POST':
+        nome = request.form.get("form-nome")
+        cpf = request.form.get("form-cpf")
+        telefone = request.form.get("form-telefone")
+        cep = request.form.get("form-cep")
+        if not (nome and cpf and telefone and cep):
+            print(f'error: valores invalidos')
+            return redirect(url_for("get_clientes"))
+        try:
+            new_cli = edit_cliente(nome, cpf, telefone, cep, var_id)
+            if new_cli:
+                print('cliente cadastrado com sucesso!')
+                return redirect(url_for("get_clientes"))
+        except Exception as e:
+            print(e)
+            return redirect(url_for("get_clientes"))
+    return render_template("clientes.html")
+
+
+
 @app.route('/clientes')
 def get_clientes():
     var_clientes = get_cliente()
@@ -217,19 +239,6 @@ def editar_cliente(var_id):
             print(e)
             return redirect(url_for("get_clientes"))
     return render_template("clientes.html")
-
-@app.route("/deletar_cliente/<var_id>", methods=['GET', 'POST'])
-def deletar_cliente(var_id):
-    if request.method == 'POST':
-        try:
-            delete_cliente(var_id)
-            return redirect(url_for("get_clientes"))
-        except Exception as e:
-            print(e)
-            return redirect(url_for("get_clientes"))
-    return render_template("clientes.html")
-
-
 
 @app.route('/galpoes')
 def ver_galpoes():
