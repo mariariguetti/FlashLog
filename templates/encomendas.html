@@ -31,8 +31,10 @@
                 <div class="modal-body">
                     <select class="form-select" aria-label="Default select example" name="form-cliente_id">
                         <option selected>Selecione seu Destinatário</option>
-                        {% for i in var_cliente %}
-                        <option value="{{i['id_cliente']}}">{{i["nome"]}} - {{i["cep"]}}</option>
+                        {% for i in var_enco %}
+                        <option value="{{i['encomenda']['id_encomenda']}}">{{i['encomenda']['cliente_id']}} -
+                            {{i["cliente"]['nome']}}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -79,8 +81,44 @@
             <div class="status_encomenda bg-success">Entregue</div>
         </td>
         {% endif %}
-        <td><a><i class="bi bi-shuffle btn btn-primary"></i></a></td>
+        <td>
+            <a data-bs-toggle="modal" data-bs-target="#editar_enco{{i['encomenda']['id_encomenda']}}"><i
+                    class="bi bi-pencil-square text-primary fs-6"></i></a>
+        </td>
     </tr>
+    <div class="modal fade" id="editar_enco{{i['encomenda']['id_encomenda']}}" tabindex="-1"
+         aria-labelledby="mostrar_enco{{i['encomenda']['id_encomenda']}}"
+         aria-hidden="true">
+        <form id="form-editar" action="{{ url_for('edit_encomenda', var_id = i['encomenda']['id_encomenda']) }}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="mostrar_enco{{i['encomenda']['id_encomenda']}}"><i
+                                class="bi bi-pencil-square text-primary fs-6"></i> Editar Encomenda de
+                            {{i['cliente']['nome']}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-select" aria-label="Default select example" name="form-remetente">
+                            <option selected>Selecione o novo Remetente</option>
+                            {% for i in var_empre %}
+                            <option value="{{i['nome']}}">{{i["id_empresa"]}} - {{i["nome"]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Fechar
+                        </button>
+                        <button type="submit" class="btn btn-info">Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     {% endfor %}
     </tbody>
 </table>

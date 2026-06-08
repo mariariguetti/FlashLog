@@ -3,12 +3,12 @@
 {% block conteudo %}
 
 <div class="pesquisa-encomendas">
-<button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro_galpao">
-    Cadastrar galpão
-</button>
+    <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro_galpao">
+        Cadastrar galpão
+    </button>
 </div>
 <div class="modal fade" id="cadastro_galpao" tabindex="-1" aria-labelledby="mostrar2" aria-hidden="true">
-    <form id="form-cadastro_galpao" action="{{ url_for('postar_galpao') }}" method="post">
+    <form id="form-cadastro_galpao" action="{{ url_for('cadastrar_galpao') }}" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -27,7 +27,7 @@
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Fechar
                     </button>
-                    <button  type="submit" class="btn btn-info">Lançar
+                    <button type="submit" class="btn btn-info">Lançar
                     </button>
                 </div>
             </div>
@@ -41,6 +41,7 @@
         <th scope="col">ID</th>
         <th scope="col">Cidade</th>
         <th scope="col">Estado</th>
+        <th scope="col">Açãoes</th>
     </tr>
     </thead>
     <tbody>
@@ -49,11 +50,45 @@
         <td>{{i["id_galpao"]}}</td>
         <td>{{i["cidade"]}}</td>
         <td>{{i["estado"]}}</td>
+        <td>
+            <a data-bs-toggle="modal" data-bs-target="#editar_galp{{i['id_galpao']}}"><i
+                    class="bi bi-pencil-square text-primary fs-6"></i></a>
+        </td>
     </tr>
+    <div class="modal fade" id="editar_galp{{i['id_galpao']}}" tabindex="-1" aria-labelledby="edit_ga{{i['id_galpao']}}"
+         aria-hidden="true">
+        <form id="form-cadastro" action="{{ url_for('editar_galpao',var_id = i['id_galpao']) }}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="edit_ga{{i['id_galpao']}}">Editar Galpão</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>
+                            <input placeholder="Digite seu cidade" name="form-cidade"
+                                   class="form-modal" value="{{i['cidade']}}">
+                        </label>
+                        <label>
+                            <input placeholder="Digite seu estado" name="form-estado"
+                                   class="form-modal" value="{{i['estado']}}">
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Fechar
+                        </button>
+                        <button type="submit" class="btn btn-info">Lançar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     {% endfor %}
     </tbody>
 </table>
-
 
 
 {% endblock conteudo %}

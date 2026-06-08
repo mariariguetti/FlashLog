@@ -54,6 +54,10 @@ a:hover {
     border: black 0;
 }
 
+.img_base {
+    height: auto;
+    width: 550px;
+}
 
 .icon_menu {
     color: white;
@@ -319,5 +323,4 @@ a:hover {
     height: 40px;
     width: 150px;
     border-radius: 8px;
-
 }

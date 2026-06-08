@@ -8,7 +8,7 @@
     </button>
 </div>
 <div class="modal fade" id="cadastro" tabindex="-1" aria-labelledby="mostrar1" aria-hidden="true">
-    <form id="form-cadastro" action="{{ url_for('post_cliente') }}" method="post">
+    <form id="form-cadastro" action="{{ url_for('cadastrar_cliente') }}" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,7 +74,7 @@
     </tr>
     <div class="modal fade" id="editar{{i['id_cliente']}}" tabindex="-1" aria-labelledby="mostrar{{i['id_cliente']}}"
          aria-hidden="true">
-        <form id="form-editar" action="{{ url_for('editar_cliente', var_id = i['id_cliente']) }}" method="post">
+        <form id="form-editar" action="{{ url_for('edit_cliente', var_id = i['id_cliente']) }}" method="post">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
