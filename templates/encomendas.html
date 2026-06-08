@@ -70,11 +70,15 @@
         <td>{{i["cliente"]["id_cliente"]}} - {{i["cliente"]["nome"]}}</td>
         {% if i["encomenda"]["status_encomenda"] == "POSTADO" %}
         <td>
-            <div class="status_encomenda bg-warning">Postado</div>
+            <div class="status_encomenda bg-secondary">Postado</div>
         </td>
         {% elif i["encomenda"]["status_encomenda"] == "TRANSITO" %}
         <td>
             <div class="status_encomenda bg-info">Em Transito</div>
+        </td>
+        {% elif i["encomenda"]["status_encomenda"] == "CAMINHO" %}
+        <td>
+            <div class="status_encomenda bg-warning">A Caminho</div>
         </td>
         {% elif i["encomenda"]["status_encomenda"] == "ENTREGUE" %}
         <td>
