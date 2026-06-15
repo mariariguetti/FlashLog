@@ -29,7 +29,15 @@
                         <select class="form-select" aria-label="Default select example" name="form-encomenda">
                             <option selected>Selecione a encomenda da movimentação</option>
                             {% for i in var_encom %}
-                            <option value="{{i['encomenda']['id_encomenda']}}">{{i["cliente"]["nome"]}}</option>
+                            {% if i["encomenda"]["status_encomenda"] == "ENTREGUE" %}
+                            <option value="{{i['encomenda']['id_encomenda']}}" disabled>{{i["cliente"]["nome"]}} -
+                                {{i["encomenda"]["codigo_r"]}}
+                            </option>
+                            {% else %}
+                            <option value="{{i['encomenda']['id_encomenda']}}">{{i["cliente"]["nome"]}} -
+                                {{i["encomenda"]["codigo_r"]}}
+                            </option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </label>
@@ -50,7 +58,7 @@
 
 <!--Lista-->
 
-<table class="table">
+<table class="table table-dark table-striped-columns">
     <thead>
     <tr>
         <th scope="col">ID</th>

@@ -183,7 +183,6 @@ a:hover {
     margin-right: 35px;
     color: white;
     align-items: center;
-    margin-right: 8px;
     font-family: Arial, sans serif;
 }
 
@@ -245,7 +244,6 @@ a:hover {
 .form-modal::placeholder {
     color: #0D2238;
 }
-
 
 .modal-body {
     display: flex;
@@ -334,6 +332,45 @@ a:hover {
     width: 458px;
 }
 
+.modal-cidade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 475px;
+}
+
+.modal-cidade label .form-cidade {
+    background: transparent;
+    border: #0D2238 3px outset;
+    border-radius: 5px;
+    color: #0D2238;
+    width: 324px;
+}
+
+.modal-cidade label .form-estado {
+    background: transparent;
+    border: #0D2238 3px outset;
+    border-radius: 5px;
+    color: #0D2238;
+    width: 92px;
+}
+
+.modal-cidade label .form-rua {
+    background: transparent;
+    border: #0D2238 3px outset;
+    border-radius: 5px;
+    color: #0D2238;
+    width: 285px;
+}
+
+.modal-cidade label .form-numero {
+    background: transparent;
+    border: #0D2238 3px outset;
+    border-radius: 5px;
+    color: #0D2238;
+    width: 125px;
+}
+
 .botao_cep {
     display: flex;
     align-items: center;
@@ -351,3 +388,4 @@ a:hover {
     height: 48px;
     border-radius: 5px;
 }
+

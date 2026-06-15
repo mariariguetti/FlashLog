@@ -184,16 +184,18 @@ def cadastrar_cliente():
         cpf = request.form.get("form-cpf")
         telefone = request.form.get("form-telefone")
         cep = request.form.get("form-cep")
-        if not (nome and cpf and telefone and cep):
+        numero_casa = request.form.get("form-numero_casa")
+        if not (nome and cpf and telefone and cep and numero_casa):
             print(f'error: valores invalidos')
             return redirect(url_for("clientes"))
 
         var_endereco = get_endereco(cep)
 
         local = f"{var_endereco['localidade']}/{var_endereco['uf']}"
+        rua = f"{var_endereco['logradouro']}"
         print(local)
         try:
-            post_clientes(nome=nome, cpf=cpf, telefone=telefone, endereco=local)
+            post_clientes(nome=nome, cpf=cpf, telefone=telefone, endereco=local,rua=rua,numero_casa=numero_casa)
             print('cliente cadastrado com sucesso!')
             return redirect(url_for("clientes"))
         except Exception as e:
@@ -209,11 +211,18 @@ def edit_cliente(var_id):
         cpf = request.form.get("form-cpf")
         telefone = request.form.get("form-telefone")
         cep = request.form.get("form-cep")
-        if not (nome and cpf and telefone and cep):
+        numero_casa = request.form.get("form-numero_casa")
+        if not (nome or cpf or telefone or cep or numero_casa):
             print(f'error: valores invalidos')
             return redirect(url_for("clientes"))
+        var_endereco = get_endereco(cep)
+
+        local = f"{var_endereco['localidade']}/{var_endereco['uf']}"
+        rua = f"{var_endereco['logradouro']}"
+
+
         try:
-            put_cliente(nome, cpf, telefone, cep,var_id)
+            put_cliente(nome=nome, cpf=cpf, telefone=telefone, endereco=local,rua=rua,numero_casa=numero_casa,var_id=var_id)
             return redirect(url_for("clientes"))
         except Exception as e:
             print(e)

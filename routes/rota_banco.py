@@ -39,14 +39,16 @@ def get_cliente():
     print(dados)
     return dados.json()
 
-def post_clientes(nome, cpf, telefone, endereco):
+def post_clientes(nome, cpf, telefone, endereco,rua,numero_casa):
     url_ = f"{url}/post_cliente"
 
     dados_clientes = {
         "nome": nome,
         "cpf": cpf,
         "telefone": telefone,
-        "endereco": endereco
+        "endereco": endereco,
+        "rua": rua,
+        "numero_casa": numero_casa
     }
 
     dados = requests.post(url_, json=dados_clientes)
@@ -134,14 +136,16 @@ def logar_user(id):
     print(id)
     pass
 
-def put_cliente(nome,cpf,telefone,endereco,var_id):
+def put_cliente(nome,cpf,telefone,endereco,rua,numero_casa,var_id):
     url_ = f"{url}/put_cliente/{var_id}"
 
     dados_clientes = {
         "nome": nome,
         "cpf": cpf,
         "telefone": telefone,
-        "endereco": endereco
+        "endereco": endereco,
+        "rua": rua,
+        "numero_casa": numero_casa
     }
 
     dados = requests.put(url_, json=dados_clientes)
