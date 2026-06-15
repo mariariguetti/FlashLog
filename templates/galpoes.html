@@ -17,10 +17,23 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label>
-                        <input id="input-nome" placeholder="Digite seu CEP" name="form-cep"
-                               class="form-modal">
-                    </label>
+                    <div class="modal-cep">
+                        <label>
+                            <input id="form-cep" placeholder="Digite seu CEP" name="form-cep"
+                                   class="form-modal">
+                        </label>
+                        <a type="submit" onclick="get_cep()" class="botao_cep btn btn-primary">Buscar</a>
+                    </div>
+                    <div>
+                        <label>
+                            <input id="form-cidade" placeholder="Cidade" name="form-cidade"
+                                   class="form-modal" value="" disabled>
+                        </label>
+                        <label>
+                            <input id="form-uf" placeholder="Estado" name="form-uf"
+                                   class="form-modal" value="" disabled>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -41,7 +54,7 @@
         <th scope="col">ID</th>
         <th scope="col">Cidade</th>
         <th scope="col">Estado</th>
-        <th scope="col">Açãoes</th>
+        <th scope="col">Ações</th>
     </tr>
     </thead>
     <tbody>
@@ -90,5 +103,6 @@
     </tbody>
 </table>
 
+<script src="/static/js/get_cep.js"></script>
 
 {% endblock conteudo %}

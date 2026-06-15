@@ -84,7 +84,7 @@ def cadastrar_user():
             return redirect(url_for("login"))
     return render_template("login.html")
 
-@app.route('/logistica', methods=['GET', 'POST'])
+@app.route('/logistica')
 def logistica():
     var_galpo = get_galpoes()
     var_encom = get_encomenda()
@@ -96,13 +96,12 @@ def logistica():
 def cadastrar_movimentacao():
     galpao = request.form.get("form-galpao")
     encomenda = request.form.get("form-encomenda")
-    status = request.form.get("form-status")
 
-    if not (galpao or encomenda or status):
+    if not (galpao or encomenda):
         print(f'error: valores invalidos')
         return redirect(url_for("logistica"))
     try:
-        post_movimentacao(galpao_id=galpao, encomenda_id=encomenda, status_movi=status)
+        post_movimentacao(galpao_id=galpao, encomenda_id=encomenda)
         print('logistica cadastrada com sucesso!')
         return redirect(url_for("logistica"))
 
@@ -185,17 +184,18 @@ def cadastrar_cliente():
         cpf = request.form.get("form-cpf")
         telefone = request.form.get("form-telefone")
         cep = request.form.get("form-cep")
-
         if not (nome and cpf and telefone and cep):
             print(f'error: valores invalidos')
             return redirect(url_for("clientes"))
+
+        var_endereco = get_endereco(cep)
+
+        local = f"{var_endereco['localidade']}/{var_endereco['uf']}"
+        print(local)
         try:
-            new_cli = post_clientes(nome, cpf, telefone, cep)
-
-            if new_cli:
-                print('cliente cadastrado com sucesso!')
-                return redirect(url_for("clientes"))
-
+            post_clientes(nome=nome, cpf=cpf, telefone=telefone, endereco=local)
+            print('cliente cadastrado com sucesso!')
+            return redirect(url_for("clientes"))
         except Exception as e:
             print(e)
             return redirect(url_for("clientes"))
@@ -213,7 +213,7 @@ def edit_cliente(var_id):
             print(f'error: valores invalidos')
             return redirect(url_for("clientes"))
         try:
-            new_cli = put_cliente(nome, cpf, telefone, cep,var_id)
+            put_cliente(nome, cpf, telefone, cep,var_id)
             return redirect(url_for("clientes"))
         except Exception as e:
             print(e)
@@ -235,7 +235,7 @@ def cadastrar_galpao():
         try:
             endereco_galpao = get_endereco(cep=cep)
             print(endereco_galpao)
-            new_ende = post_galpao(cidade=endereco_galpao["localidade"], estado=endereco_galpao["estado"])
+            new_ende = post_galpao(cidade=endereco_galpao["localidade"], estado=endereco_galpao["uf"])
             if new_ende:
                 print('galpão cadastrado com sucesso!')
                 return redirect(url_for("galpoes"))

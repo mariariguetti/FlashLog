@@ -214,6 +214,8 @@ a:hover {
     color: #0D2238;
 }
 
+
+
 .icone_input {
     background: #0D2238;
     color: white;
@@ -323,4 +325,29 @@ a:hover {
     height: 40px;
     width: 150px;
     border-radius: 8px;
+}
+
+.modal-cep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 458px;
+}
+
+.botao_cep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 48px;
+    border-radius: 5px;
+}
+
+.botao_cep:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 48px;
+    border-radius: 5px;
 }
