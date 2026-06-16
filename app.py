@@ -42,18 +42,12 @@ def login():
             print(f'error: valores invalidos')
             return render_template("login.html")
         else:
-            user = post_login(email, senha)
-            print(user)
-            if user:
-                perfil = user['perfil_status']
-                usuario = User(nome=perfil["nome"], email=perfil["email"], id=perfil["id"],
-                               data_nascimento=perfil["data_nascimento"], perfil=perfil["perfil"])
-                print(usuario)
-                login_user(usuario)
-                return redirect(url_for("home"))
-            else:
-                print(f'error')
-                return redirect(url_for("login"))
+            try:
+                user = post_login(email, senha)
+                return render_template('login.html',status_login=user['status'])
+            except Exception as e:
+                print(e)
+                return redirect(url_for('login'))
     return render_template("login.html")
 
 @app.route('/logout')
