@@ -1,7 +1,7 @@
-from xml.dom.pulldom import END_ELEMENT
-
+from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user, UserMixin
+from sqlalchemy import result_tuple
 
 from routes.rota_banco import *
 from routes.rota_endereco import get_endereco
@@ -83,6 +83,16 @@ def logistica():
     var_galpo = get_galpoes()
     var_encom = get_encomenda()
     movimen = get_movimentacao()
+
+    for i in movimen:
+        data_atual = i['movimentacao']['data_atual']
+
+        date_ = datetime.strptime(data_atual, '%a, %d %b %Y %H:%M:%S GMT')
+
+        result_data = date_.strftime('%d/%m/%Y - %H:%M')
+
+        i['movimentacao']['data_atual'] = result_data
+
     return render_template("logistica.html", var_movi=movimen, var_galpo=var_galpo,
                            var_encom=var_encom)
 
@@ -106,9 +116,8 @@ def cadastrar_movimentacao():
 @app.route('/encomendas')
 def encomendas():
     var_enco = get_encomenda()
-    var_empre = get_empresas()
     var_cliente = get_cliente()
-    return render_template("encomendas.html", var_enco=var_enco, var_empre=var_empre,
+    return render_template("encomendas.html", var_enco=var_enco,
                            var_cliente=var_cliente)
 
 @app.route('/cadastrar_encomenda', methods=['POST'])
@@ -204,19 +213,15 @@ def edit_cliente(var_id):
         nome = request.form.get("form-nome")
         cpf = request.form.get("form-cpf")
         telefone = request.form.get("form-telefone")
-        cep = request.form.get("form-cep")
+        endereco = request.form.get("form-endereco")
+        rua = request.form.get("form-rua")
         numero_casa = request.form.get("form-numero_casa")
-        if not (nome or cpf or telefone or cep or numero_casa):
+        if not (nome or cpf or telefone or endereco or numero_casa):
             print(f'error: valores invalidos')
             return redirect(url_for("clientes"))
-        var_endereco = get_endereco(cep)
-
-        local = f"{var_endereco['localidade']}/{var_endereco['uf']}"
-        rua = f"{var_endereco['logradouro']}"
-
 
         try:
-            put_cliente(nome=nome, cpf=cpf, telefone=telefone, endereco=local,rua=rua,numero_casa=numero_casa,var_id=var_id)
+            put_cliente(nome=nome, cpf=cpf, telefone=telefone, endereco=endereco,rua=rua,numero_casa=numero_casa,var_id=var_id)
             return redirect(url_for("clientes"))
         except Exception as e:
             print(e)

@@ -251,9 +251,8 @@ a:hover {
 }
 
 .modal-body label {
-    margin: 15px;
+    margin: 10px;
     width: 95%;
-    height: 45px;
 }
 
 .modal-body label input{
@@ -327,8 +326,8 @@ a:hover {
 
 .modal-cep {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: space-between;
     width: 458px;
 }
 
@@ -378,6 +377,7 @@ a:hover {
     width: 150px;
     height: 48px;
     border-radius: 5px;
+    margin-bottom: 15px;
 }
 
 .botao_cep:hover {
@@ -387,5 +387,6 @@ a:hover {
     width: 150px;
     height: 48px;
     border-radius: 5px;
+    margin-bottom: 15px;
 }
 

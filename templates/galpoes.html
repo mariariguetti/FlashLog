@@ -18,18 +18,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="modal-cep">
-                        <label>
-                            <input id="form-cep" placeholder="Digite seu CEP" name="form-cep"
-                                   class="form-modal">
-                        </label>
+                        <div>
+                            <label>
+                                CEP
+                                <input id="form-cep" placeholder="Digite seu CEP" name="form-cep"
+                                       class="form-modal">
+                            </label>
+                        </div>
                         <a type="submit" onclick="get_cep()" class="botao_cep btn btn-primary">Buscar</a>
+
                     </div>
                     <div>
                         <label>
+                            Cidade
                             <input id="form-cidade" placeholder="Cidade" name="form-cidade"
                                    class="form-modal" value="" disabled>
                         </label>
                         <label>
+                            Estado
                             <input id="form-uf" placeholder="Estado" name="form-uf"
                                    class="form-modal" value="" disabled>
                         </label>
@@ -79,23 +85,16 @@
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="modal-cep">
                         <label>
-                            <input id="form-cep1" placeholder="Digite seu CEP" name="form-cep"
-                                   class="form-modal">
-                        </label>
-                        <a type="submit" onclick="get_cep1()" class="botao_cep btn btn-primary">Buscar</a>
-                    </div>
-                    <div>
-                        <label>
-                            <input id="form-cidade1" placeholder="Cidade" name="form-cidade"
-                                   class="form-modal" value="{{i['cidade']}}" disabled>
+                            Cidade:
+                            <input placeholder="Cidade" name="form-cidade"
+                                   class="form-modal" value="{{i['cidade']}}">
                         </label>
                         <label>
-                            <input id="form-uf1" placeholder="Estado" name="form-uf"
-                                   class="form-modal" value="{{i['estado']}}" disabled>
+                            Estado:
+                            <input placeholder="Estado" name="form-estado"
+                                   class="form-modal" value="{{i['estado']}}">
                         </label>
-                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
