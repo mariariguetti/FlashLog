@@ -231,6 +231,7 @@ def edit_cliente(var_id):
 @app.route('/galpoes')
 def galpoes():
     var_galpoes = get_galpoes()
+    print(var_galpoes)
     return render_template("galpoes.html", var_galpoes=var_galpoes)
 
 @app.route('/cadastrar_galpao', methods=['POST'])
@@ -254,7 +255,7 @@ def cadastrar_galpao():
 
     return redirect(url_for("galpoes"))
 
-@app.route('/editar_galpao/<var_id>', methods=['GET', 'POST'])
+@app.route('/editar_galpao', methods=['GET', 'POST'])
 def editar_galpao(var_id):
     if request.method == 'POST':
         cidade = request.form.get("form-cidade")

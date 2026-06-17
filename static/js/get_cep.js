@@ -15,3 +15,22 @@ async function get_cep() {
         input_rua.value = dados.logradouro
     }
 }
+
+async function get_cep1(id) {
+    const input_cep = document.getElementById('form-cepe'+id)
+
+    console.log(input_cep.value)
+
+    let url = "https://viacep.com.br/ws/" + input_cep.value + "/json/"
+    let resultado = await fetch(url)
+
+    if (resultado.ok) {
+        let dados = await resultado.json()
+        const input_cidade = document.getElementById('form-cidadee'+id)
+        const input_uf = document.getElementById('form-ufe'+id)
+
+        input_cidade.value = dados.localidade
+        input_uf.value = dados.uf
+    }
+}
+

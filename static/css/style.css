@@ -213,6 +213,17 @@ a:hover {
     color: #0D2238;
 }
 
+.botao:hover {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    width: 273px;
+    height: 38px;
+    font-weight: normal;
+    color: #0D2238;
+}
+
 
 
 .icone_input {
@@ -377,7 +388,7 @@ a:hover {
     width: 150px;
     height: 48px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .botao_cep:hover {
@@ -387,6 +398,6 @@ a:hover {
     width: 150px;
     height: 48px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
