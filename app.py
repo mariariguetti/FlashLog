@@ -111,9 +111,9 @@ def cadastrar_movimentacao():
         flash(psm1['msg'], psm1['status'])
         print('logistica cadastrada com sucesso!')
         return redirect(url_for("logistica"))
-
     except Exception as e:
         print(e)
+        flash(f'Falha interna no sistema (Erro: {e}). Tente novamente mais tarde.', 'warning')
         return redirect(url_for("logistica"))
 
 @app.route('/encomendas')

@@ -35,7 +35,7 @@
                     <label>
                         Galpão
                         <select class="form-select" aria-label="Default select example" name="form-galpao">
-                            <option selected>Selecione um galpao da movimentação</option>
+                            <option value="" selected>Selecione um galpao da movimentação</option>
                             {% for i in var_galpo %}
                             <option value="{{i['id_galpao']}}">{{i['cidade']}}/{{i["estado"]}}</option>
                             {% endfor %}
@@ -44,7 +44,7 @@
                     <label>
                         Encomenda
                         <select class="form-select" aria-label="Default select example" name="form-encomenda">
-                            <option selected>Selecione a encomenda da movimentação</option>
+                            <option value="" selected>Selecione a encomenda da movimentação</option>
                             {% for i in var_encom %}
                             {% if i["encomenda"]["status_encomenda"] == "ENTREGUE" %}
                             {% else %}

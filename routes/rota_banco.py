@@ -1,6 +1,6 @@
 import requests
 
-url = "http://10.136.232.19:5006"
+url = "http://10.135.232.19:5006"
 
 def get_galpoes():
     url_ = f"{url}/get_galpoes"
