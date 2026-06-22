@@ -2,6 +2,21 @@
 
 {% block conteudo %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-error px-3">
+    <!--  percorrer a lista de mensagens  -->
+    {% for category, message in messages %}
+    <!--  Criar um card pai e filho  -->
+    <div class="alert alert-{{ category }} alert-dismissible fade show px-5" role="alert">
+        <strong>{{ message }}</strong>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
 <div class="pesquisa-encomendas">
     <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
         Cadastrar cliente
@@ -22,16 +37,18 @@
                         <input id="input-nome" placeholder="Digite seu nome" name="form-nome"
                                class="form-modal">
                     </label>
-                    <label>
-                        CPF
-                        <input id="input-cpf" placeholder="Digite seu CPF"
-                               name="form-cpf" class="form-modal">
-                    </label>
-                    <label>
-                        Telefone
-                        <input id="input-telefone" placeholder="Digite seu telefone" name="form-telefone"
-                               class="form-modal">
-                    </label>
+                    <div class="modal-div">
+                        <label>
+                            CPF
+                            <input id="input-cpf" placeholder="Digite seu CPF"
+                                   name="form-cpf" class="form-modal" maxlength="11">
+                        </label>
+                        <label>
+                            Telefone
+                            <input id="input-telefone" placeholder="Digite seu telefone" name="form-telefone"
+                                   class="form-modal" maxlength="11">
+                        </label>
+                    </div>
                     <div class="modal-cep">
                         <label>
                             CEP
@@ -40,30 +57,32 @@
                         </label>
                         <a type="submit" onclick="get_cep()" class="botao_cep btn btn-primary">Buscar</a>
                     </div>
-                    <div class="modal-cidade">
+                    <div class="modal-labels">
                         <label>
                             Cidade
                             <input id="form-cidade" placeholder="Cidade" name="form-cidade"
-                                   class="form-cidade" value="" disabled>
+                                   class="form-high" value="" readonly>
                         </label>
                         <label>
                             Estado
                             <input id="form-uf" placeholder="Estado" name="form-uf"
-                                   class="form-estado" value="" disabled>
+                                   class="form-small" value="" readonly>
                         </label>
                     </div>
-                    <div class="modal-cidade">
+                    <div class="modal-labels">
                         <label>
                             Logradouro
-                            <input id="form-rua" placeholder="Rua" name="form-rua"
-                                   class="form-rua" value="" disabled>
+                            <input id="form-rua" placeholder="Logradouro/Rua" name="form-rua"
+                                   class="form-high" value="" readonly>
                         </label>
                         <label>
                             Nº da Casa
-                            <input id="form-numero_casa" placeholder="Nº da Casa" name="form-numero_casa"
-                                   class="form-numero">
+                            <input id="form-numero_casa" placeholder="Digite" name="form-numero_casa"
+                                   class="form-small">
                         </label>
                     </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
@@ -104,9 +123,14 @@
                     class="bi bi-pencil-square text-primary fs-6"></i></a>
         </td>
     </tr>
-    <div class="modal fade" id="editar{{i['id_cliente']}}" tabindex="-1" aria-labelledby="mostrar{{i['id_cliente']}}"
+    {% endfor %}
+    </tbody>
+</table>
+
+{% for i in var_clientes %}
+<div class="modal fade" id="editar{{i['id_cliente']}}" tabindex="-1" aria-labelledby="mostrar{{i['id_cliente']}}"
          aria-hidden="true">
-        <form id="form-editar" action="{{ url_for('edit_cliente', var_id = i['id_cliente']) }}" method="post">
+        <form id="form-editar" action="{{ url_for('cadastrar_cliente', var_id = i['id_cliente']) }}" method="post">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -116,41 +140,51 @@
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label>
-                            Nome
-                            <input id="input-nome1" placeholder="Digite seu nome" name="form-nome"
-                                   class="form-modal" value="{{i.nome}}">
-                        </label>
+                    <label>
+                        Nome
+                        <input placeholder="Digite seu nome" name="form-nome"
+                               class="form-modal" value="{{i['nome']}}">
+                    </label>
+                    <div class="modal-div">
                         <label>
                             CPF
-                            <input id="input-cpf1" placeholder="Digite seu CPF"
-                                   name="form-cpf" class="form-modal" value="{{i.cpf}}">
+                            <input placeholder="Digite seu CPF"
+                                   name="form-cpf" class="form-modal" maxlength="11" value="{{i['cpf']}}">
                         </label>
                         <label>
                             Telefone
-                            <input id="input-telefone1" placeholder="Digite seu telefone" name="form-telefone"
-                                   class="form-modal" value="{{i.telefone}}">
+                            <input placeholder="Digite seu telefone" name="form-telefone"
+                                   class="form-modal" maxlength="11" value="{{i['telefone']}}">
+                        </label>
+                    </div>
+                    <div class="modal-cep">
+                        <label>
+                            CEP
+                            <input id="form-cepe{{i['id_cliente']}}" placeholder="Digite seu CEP" name="form-cep"
+                                   class="form-modal">
+                        </label>
+                        <a type="submit" onclick="get_cep2('{{ i.id_cliente }}')" class="botao_cep btn btn-primary">Buscar</a>
+                    </div>
+                    <label>
+                        Cidade/Estado
+                        <input id="form-endereco{{i.id_cliente}}" placeholder="Cidade/Estado" name="form-endereco"
+                               class="form-modal" value="{{i['endereco']}}" readonly>
+                    </label>
+                    <div class="modal-labels">
+                        <label>
+                            Logradouro/Rua
+                            <input id="form-ruae{{i.id_cliente}}" placeholder="Logradouro/Rua" name="form-rua"
+                                   class="form-high" value="{{i['rua']}}" readonly>
                         </label>
                         <label>
-                            Cidade/Estado
-                            <input id="form-uf1" placeholder="Cidade/Estado" name="form-endereco"
-                                   class="form-modal" value="{{i.endereco}}">
+                            Nº da Casa
+                            <input placeholder="Digite" name="form-numero_casa"
+                                   class="form-small" value="{{i['numero_casa']}}">
                         </label>
-                        <div class="modal-cidade">
-                            <label>
-                                Logradouro
-                                <input id="form-rua1" placeholder="Rua" name="form-rua"
-                                       class="form-rua" value="{{i.rua}}">
-                            </label>
-                            <label>
-                                Nº da Casa
-                                <input placeholder="Nº da Casa" name="form-numero_casa"
-                                       class="form-numero" value="{{i.numero_casa}}">
-                            </label>
-                        </div>
                     </div>
 
 
+                </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">Fechar
@@ -162,10 +196,7 @@
             </div>
         </form>
     </div>
-
-    {% endfor %}
-    </tbody>
-</table>
+{% endfor %}
 
 <script src="/static/js/get_cep.js"></script>
 

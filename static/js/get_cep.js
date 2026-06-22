@@ -34,3 +34,21 @@ async function get_cep1(id) {
     }
 }
 
+async function get_cep2(id) {
+    const input_cep = document.getElementById('form-cepe'+id)
+
+    console.log(input_cep.value)
+
+    let url = "https://viacep.com.br/ws/" + input_cep.value + "/json/"
+    let resultado = await fetch(url)
+
+    if (resultado.ok) {
+        let dados = await resultado.json()
+        const input_endereco = document.getElementById('form-endereco'+id)
+        const input_rua = document.getElementById('form-ruae'+id)
+
+        input_endereco.value = dados.localidade + '/' + dados.uf
+        console.log(input_endereco.value)
+        input_rua.value = dados.logradouro
+    }
+}

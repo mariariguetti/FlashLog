@@ -2,6 +2,21 @@
 
 {% block conteudo %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-error px-3">
+    <!--  percorrer a lista de mensagens  -->
+    {% for category, message in messages %}
+    <!--  Criar um card pai e filho  -->
+    <div class="alert alert-{{ category }} alert-dismissible fade show px-5" role="alert">
+        <strong>{{ message }}</strong>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
 <div class="pesquisa-encomendas">
     <button type="button" class="botao btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro">
         Lançar movimentação

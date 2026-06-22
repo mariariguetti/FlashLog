@@ -162,6 +162,7 @@ a:hover {
     padding: 15px;
     border-radius: 25px;
     justify-content: flex-end;
+    height: auto;
 }
 
 .log_bar {
@@ -339,17 +340,17 @@ a:hover {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    width: 458px;
+    width: 450px;
 }
 
-.modal-cidade {
+.modal-labels {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 475px;
 }
 
-.modal-cidade label .form-cidade {
+.modal-labels label .form-high {
     background: transparent;
     border: #0D2238 3px outset;
     border-radius: 5px;
@@ -357,7 +358,7 @@ a:hover {
     width: 324px;
 }
 
-.modal-cidade label .form-estado {
+.modal-labels label .form-small {
     background: transparent;
     border: #0D2238 3px outset;
     border-radius: 5px;
@@ -365,20 +366,9 @@ a:hover {
     width: 92px;
 }
 
-.modal-cidade label .form-rua {
-    background: transparent;
-    border: #0D2238 3px outset;
-    border-radius: 5px;
-    color: #0D2238;
-    width: 285px;
-}
-
-.modal-cidade label .form-numero {
-    background: transparent;
-    border: #0D2238 3px outset;
-    border-radius: 5px;
-    color: #0D2238;
-    width: 125px;
+.modal-div {
+    display: flex;
+    width: 463px;
 }
 
 .botao_cep {
@@ -386,7 +376,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     width: 150px;
-    height: 48px;
+    height: 47px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -396,8 +386,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     width: 150px;
-    height: 48px;
+    height: 47px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
-

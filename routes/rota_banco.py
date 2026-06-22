@@ -1,11 +1,14 @@
 import requests
 
-url = "http://10.135.232.24:5006"
+url = "http://10.136.232.19:5006"
 
 def get_galpoes():
     url_ = f"{url}/get_galpoes"
 
     dados = requests.get(url_)
+
+    if dados.status_code != 200:
+        print(f"Erro na API: Status:{dados.status_code}")
 
     return dados.json()
 
@@ -39,6 +42,7 @@ def get_cliente():
     print(dados)
     return dados.json()
 
+
 def post_clientes(nome, cpf, telefone, endereco,rua,numero_casa):
     url_ = f"{url}/post_cliente"
 
@@ -64,7 +68,9 @@ def post_encomenda(remetente,cliente_id):
     }
 
     dados = requests.post(url_, json=dados_encomenda)
-    print(dados)
+
+    if str(dados) == "<Response [409]>":
+        return 409
 
     return dados.json()
 
@@ -81,7 +87,7 @@ def post_galpao(cidade, estado):
     return dados.json()
 
 def post_usuario(nome, email, senha, data_nascimento, perfil):
-    url_ = f"{url}/cadastrar_usuario"
+    url_ = f"{url}/post_usuario"
 
     dados_user = {
         "nome": nome,
@@ -93,7 +99,7 @@ def post_usuario(nome, email, senha, data_nascimento, perfil):
     print("user_",dados_user)
 
     dados = requests.post(url_, json=dados_user)
-    print('flamingo',dados)
+
     return dados.json()
 
 def post_login(email, senha):
@@ -149,16 +155,19 @@ def put_cliente(nome,cpf,telefone,endereco,rua,numero_casa,var_id):
     }
 
     dados = requests.put(url_, json=dados_clientes)
+
     return dados.json()
 
-def put_encomenda(remetente,var_id):
+def put_encomenda(remetente,cliente_id,var_id):
     url_ = f"{url}/put_encomenda/{var_id}"
 
     dados_encomenda = {
-        "remetente": remetente
+        "remetente": remetente,
+        "cliente_id": cliente_id
     }
 
     dados = requests.put(url_, json=dados_encomenda)
+
     return dados.json()
 
 def put_galpao(cidade,estado,var_id):
@@ -170,5 +179,5 @@ def put_galpao(cidade,estado,var_id):
     }
 
     dados = requests.put(url_, json=dados_galpao)
-    return dados.json()
 
+    return dados.json()
